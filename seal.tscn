@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://kl2un7p3v1c6"]
+
+[ext_resource type="Script" uid="uid://bo1owp0d7xujq" path="res://seal.gd" id="1_fclou"]
+[ext_resource type="Texture2D" uid="uid://bomohe4w3na2d" path="res://sprites/randomfish.png" id="2_or4ip"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8syjs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_or4ip")
+}],
+"loop": 1,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_or4ip")
+}],
+"loop": 1,
+"name": &"up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4pq2v"]
+size = Vector2(55, 68)
+
+[node name="Player" type="Area2D" unique_id=181559628]
+script = ExtResource("1_fclou")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1993775518]
+position = Vector2(50, 50)
+rotation = 3.1415927
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_8syjs")
+animation = &"up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1678812842]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_4pq2v")
