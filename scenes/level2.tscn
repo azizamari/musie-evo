@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://da734hq6x7tks"]
+
+[ext_resource type="Script" uid="uid://ccfptii3c3ne2" path="res://scripts/level_2.gd" id="1_y0xe8"]
+[ext_resource type="PackedScene" uid="uid://difnw15nb62nc" path="res://scenes/projectiles/projectile.tscn" id="2_6q4t8"]
+[ext_resource type="PackedScene" uid="uid://c8p2s0217vnfd" path="res://scenes/projectiles/projectile2.tscn" id="2_alqfr"]
+[ext_resource type="PackedScene" uid="uid://kl2un7p3v1c6" path="res://scenes/seal.tscn" id="3_8tcn8"]
+[ext_resource type="PackedScene" uid="uid://chot4vgt4nlcs" path="res://scenes/projectiles/projectile3.tscn" id="3_yqkch"]
+
+[node name="Node2D" type="Node2D" unique_id=1373537434 node_paths=PackedStringArray("player", "score_label", "timer_label")]
+script = ExtResource("1_y0xe8")
+player = NodePath("Player")
+score_label = NodePath("CanvasLayer/Label")
+timer_label = NodePath("CanvasLayer/Timer")
+projectile_scenes = Array[PackedScene]([ExtResource("2_alqfr"), ExtResource("3_yqkch"), ExtResource("2_6q4t8")])
+
+[node name="Projectile" parent="." unique_id=671729691 instance=ExtResource("2_6q4t8")]
+
+[node name="Player" parent="." unique_id=181559628 instance=ExtResource("3_8tcn8")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=961378219]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=124322978]
+offset_left = 215.0
+offset_top = 103.0
+offset_right = 270.0
+offset_bottom = 126.0
+text = "sadsad"
+
+[node name="Timer" type="Label" parent="CanvasLayer" unique_id=958877894]
+offset_right = 40.0
+offset_bottom = 23.0

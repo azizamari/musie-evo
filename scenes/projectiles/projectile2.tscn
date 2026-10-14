@@ -1,13 +1,13 @@
-[gd_scene format=3 uid="uid://difnw15nb62nc"]
+[gd_scene format=3 uid="uid://c8p2s0217vnfd"]
 
-[ext_resource type="Script" uid="uid://djpg42u4evuxo" path="res://scripts/projectile.gd" id="1_qxf0c"]
-[ext_resource type="Texture2D" uid="uid://dnkvnkwr0ied" path="res://sprites/projectile.png" id="2_dgwo2"]
+[ext_resource type="Script" uid="uid://djpg42u4evuxo" path="res://scripts/projectile.gd" id="1_7yd63"]
+[ext_resource type="Texture2D" uid="uid://dnkvnkwr0ied" path="res://sprites/projectile.png" id="2_isl7d"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4pq2v"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_dgwo2")
+"texture": ExtResource("2_isl7d")
 }],
 "loop": 1,
 "name": &"default",
@@ -18,7 +18,12 @@ animations = [{
 radius = 26.0
 
 [node name="Projectile" type="Area2D" unique_id=671729691]
-script = ExtResource("1_qxf0c")
+script = ExtResource("1_7yd63")
+value = 2
+spawn_weight = 25.0
+speed_multiplier = 1.35
+wobble_amplitude = 30.0
+wobble_frequency = 0.8
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=207440251]
 scale = Vector2(0.1, 0.1)
