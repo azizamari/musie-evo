@@ -13,7 +13,6 @@ config_version=5
 config/name="musie-evo"
 run/main_scene="uid://0uaji0v7ticm"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
 
 [display]
 
