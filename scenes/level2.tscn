@@ -5,17 +5,43 @@
 [ext_resource type="PackedScene" uid="uid://c8p2s0217vnfd" path="res://scenes/projectiles/projectile2.tscn" id="2_alqfr"]
 [ext_resource type="PackedScene" uid="uid://kl2un7p3v1c6" path="res://scenes/seal.tscn" id="3_8tcn8"]
 [ext_resource type="PackedScene" uid="uid://chot4vgt4nlcs" path="res://scenes/projectiles/projectile3.tscn" id="3_yqkch"]
+[ext_resource type="PackedScene" uid="uid://bfd0vu1wctt1k" path="res://scenes/boss.tscn" id="6_xa7n4"]
+[ext_resource type="PackedScene" uid="uid://dic5jo7fty4aw" path="res://scenes/projectiles/projectile_algue.tscn" id="6_yqkch"]
+[ext_resource type="Script" uid="uid://cguwy1im3yf6s" path="res://scenes/camera_2d.gd" id="7_6ep0u"]
+[ext_resource type="PackedScene" uid="uid://b0xi5kpb3whhg" path="res://scenes/bullets/player_bullet.tscn" id="7_bo4dx"]
 
-[node name="Node2D" type="Node2D" unique_id=1373537434 node_paths=PackedStringArray("player", "score_label", "timer_label")]
+[node name="Node2D" type="Node2D" unique_id=1373537434 node_paths=PackedStringArray("player", "score_label", "timer_label", "camera", "player_health_bar", "boss_health_bar")]
 script = ExtResource("1_y0xe8")
 player = NodePath("Player")
 score_label = NodePath("CanvasLayer/Label")
 timer_label = NodePath("CanvasLayer/Timer")
-projectile_scenes = Array[PackedScene]([ExtResource("2_alqfr"), ExtResource("3_yqkch"), ExtResource("2_6q4t8")])
+camera = NodePath("Camera2D")
+player_health_bar = NodePath("CanvasLayer/ProgressBarPlayer")
+boss_health_bar = NodePath("CanvasLayer/ProgressBarBoss")
+game_duration = null
+projectile_scenes = Array[PackedScene]([ExtResource("2_alqfr"), ExtResource("3_yqkch"), ExtResource("2_6q4t8"), ExtResource("6_yqkch")])
+base_speed = null
+speed_variance = null
+spawn_margin = null
+end_speed_multiplier = null
+start_interval = null
+end_interval = null
+boss_scene = ExtResource("6_xa7n4")
+player_bullet_scene = ExtResource("7_bo4dx")
+ammo_per_point = null
+boss_x_from_right = null
+collect_trauma_per_point = null
+stun_trauma = null
+boss_arrive_trauma = null
+boss_hit_trauma = null
+boss_rage_trauma = null
+boss_death_trauma = null
+player_hit_trauma = null
 
 [node name="Projectile" parent="." unique_id=671729691 instance=ExtResource("2_6q4t8")]
 
 [node name="Player" parent="." unique_id=181559628 instance=ExtResource("3_8tcn8")]
+position = Vector2(56, 18)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=961378219]
 
@@ -29,3 +55,18 @@ text = "sadsad"
 [node name="Timer" type="Label" parent="CanvasLayer" unique_id=958877894]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="ProgressBarPlayer" type="ProgressBar" parent="CanvasLayer" unique_id=2143112267]
+offset_left = 243.0
+offset_top = 23.0
+offset_right = 344.0
+offset_bottom = 50.0
+
+[node name="ProgressBarBoss" type="ProgressBar" parent="CanvasLayer" unique_id=1664269081]
+offset_left = 171.0
+offset_top = 73.0
+offset_right = 294.0
+offset_bottom = 100.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1412599065]
+script = ExtResource("7_6ep0u")

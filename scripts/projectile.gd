@@ -10,6 +10,12 @@ extends Area2D
 # Sway cycles per second.
 @export var wobble_frequency: float = 1.0
 
+@export_group("Hazard")
+# Hazards (algue) stun the player instead of giving points.
+@export var is_hazard: bool = false
+# How long the player is stunned, in seconds.
+@export var stun_duration: float = 1.0
+
 var speed: float = 250.0 # overwritten by Main before spawning
 var _base_y := 0.0
 var _t := 0.0

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bfd0vu1wctt1k"]
+
+[ext_resource type="Texture2D" uid="uid://bi13tlteyghue" path="res://sprites/boss.png" id="1_dlmty"]
+[ext_resource type="Script" uid="uid://0h5flursv71a" path="res://scenes/boss.gd" id="1_neq0i"]
+[ext_resource type="PackedScene" uid="uid://begxu8shcv8j8" path="res://scenes/bullets/boss_bullet.tscn" id="2_jncid"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_neq0i"]
+radius = 178.13759
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xd8r6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dlmty")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Boss" type="Area2D" unique_id=2066973918]
+script = ExtResource("1_neq0i")
+bullet_scene = ExtResource("2_jncid")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2072070569]
+shape = SubResource("CircleShape2D_neq0i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=569810226]
+position = Vector2(1.999939, -1.0000305)
+scale = Vector2(0.39001447, 0.39001447)
+sprite_frames = SubResource("SpriteFrames_xd8r6")
