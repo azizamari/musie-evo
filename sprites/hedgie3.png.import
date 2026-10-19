@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bomohe4w3na2d"
-path="res://.godot/imported/randomfish.png-05f7e851b8f17eb808f5b17ba641b256.ctex"
+uid="uid://cwipabgjqmeru"
+path="res://.godot/imported/hedgie3.png-a4a4a2d4ac1430d2397d9c86520f7318.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/randomfish.png"
-dest_files=["res://.godot/imported/randomfish.png-05f7e851b8f17eb808f5b17ba641b256.ctex"]
+source_file="res://sprites/hedgie3.png"
+dest_files=["res://.godot/imported/hedgie3.png-a4a4a2d4ac1430d2397d9c86520f7318.ctex"]
 
 [params]
 

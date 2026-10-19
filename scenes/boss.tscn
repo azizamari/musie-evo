@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://bfd0vu1wctt1k"]
 
-[ext_resource type="Texture2D" uid="uid://bi13tlteyghue" path="res://sprites/boss.png" id="1_dlmty"]
 [ext_resource type="Script" uid="uid://0h5flursv71a" path="res://scenes/boss.gd" id="1_neq0i"]
 [ext_resource type="PackedScene" uid="uid://begxu8shcv8j8" path="res://scenes/bullets/boss_bullet.tscn" id="2_jncid"]
+[ext_resource type="Texture2D" uid="uid://4ljpqwwvpiua" path="res://sprites/bearattack.png" id="3_qnbj4"]
+[ext_resource type="Texture2D" uid="uid://dmw48u6f7q0bm" path="res://sprites/bear.png" id="4_r3bxh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_neq0i"]
 radius = 178.13759
@@ -11,10 +12,18 @@ radius = 178.13759
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_dlmty")
+"texture": ExtResource("3_qnbj4")
 }],
 "loop": 1,
-"name": &"default",
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_r3bxh")
+}],
+"loop": 1,
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -29,3 +38,4 @@ shape = SubResource("CircleShape2D_neq0i")
 position = Vector2(1.999939, -1.0000305)
 scale = Vector2(0.39001447, 0.39001447)
 sprite_frames = SubResource("SpriteFrames_xd8r6")
+animation = &"attack"

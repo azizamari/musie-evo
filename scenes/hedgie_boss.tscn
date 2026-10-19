@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c7xlo5ahx2d6g"]
+
+[ext_resource type="Texture2D" uid="uid://m8unke13sd0u" path="res://sprites/vampireidle1.png" id="1_claqt"]
+[ext_resource type="Script" uid="uid://b540w83243j38" path="res://scenes/hedgie_boss.gd" id="1_x527v"]
+[ext_resource type="PackedScene" uid="uid://dfccwj0tf0xsp" path="res://scenes/sound_ring.tscn" id="2_cpww5"]
+[ext_resource type="Texture2D" uid="uid://bdpmyj54m0i0i" path="res://sprites/vampireidle2.png" id="2_x0mer"]
+[ext_resource type="Texture2D" uid="uid://dp287qpqar6mv" path="res://sprites/vampireattack.png" id="2_x527v"]
+[ext_resource type="Texture2D" uid="uid://byr58mpb7op4m" path="res://sprites/vampireidle3.png" id="3_x527v"]
+[ext_resource type="Texture2D" uid="uid://bbwusq7pqqs4t" path="res://sprites/vampireidle4.png" id="4_cpww5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4pq2v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_claqt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_x527v")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_claqt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_x0mer")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_x527v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_cpww5")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cpww5"]
+size = Vector2(206, 272)
+
+[node name="HedgieBoss" type="Area2D" unique_id=833385347]
+position = Vector2(1, 3)
+script = ExtResource("1_x527v")
+max_health = 20
+ring_scene = ExtResource("2_cpww5")
+enter_duration = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1132168743]
+position = Vector2(-1, 102)
+scale = Vector2(0.22942857, 0.22942857)
+sprite_frames = SubResource("SpriteFrames_4pq2v")
+animation = &"attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1586659992]
+position = Vector2(6, 109)
+shape = SubResource("RectangleShape2D_cpww5")

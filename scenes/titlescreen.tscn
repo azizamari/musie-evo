@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dmcqbr33la6wr"]
+
+[ext_resource type="Texture2D" uid="uid://b5ugtteuamwsk" path="res://sprites/intro/bgintro.png" id="1_t7v6v"]
+[ext_resource type="Script" uid="uid://cd74bhem34hb0" path="res://scenes/titlescreen.gd" id="1_vhbaf"]
+[ext_resource type="Texture2D" uid="uid://cin4xm0ymsdnl" path="res://sprites/intro/logo.png" id="2_vhbaf"]
+[ext_resource type="Texture2D" uid="uid://cqhyrbh7wj7c2" path="res://sprites/intro/press.png" id="3_v6ms7"]
+[ext_resource type="Script" uid="uid://b64xehbbla0qp" path="res://scenes/pressanimation.gd" id="4_rpvs4"]
+
+[node name="Titlescreen" type="Node2D" unique_id=1208818039]
+script = ExtResource("1_vhbaf")
+
+[node name="Bgintro" type="Sprite2D" parent="." unique_id=940099579]
+position = Vector2(575, 323)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_t7v6v")
+
+[node name="Logo" type="Sprite2D" parent="." unique_id=1914652192]
+position = Vector2(570, 309)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_vhbaf")
+
+[node name="Press" type="Sprite2D" parent="." unique_id=371495165]
+position = Vector2(538, 398)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_v6ms7")
+script = ExtResource("4_rpvs4")

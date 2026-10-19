@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://cd0jl7mfu51j0"]
+
+[ext_resource type="Script" uid="uid://daw8hsk1j6gk" path="res://scripts/level_1.gd" id="1_d3jkd"]
+[ext_resource type="Texture2D" uid="uid://b4c36a8e0nqst" path="res://sprites/tutorial.png" id="2_d3jkd"]
+[ext_resource type="Texture2D" uid="uid://3x6heq7wpido" path="res://sprites/bglarry.png" id="2_wwpf4"]
+[ext_resource type="Script" uid="uid://cguwy1im3yf6s" path="res://scenes/camera_2d.gd" id="3_m7ahb"]
+[ext_resource type="PackedScene" uid="uid://ddkjcc2trxvx8" path="res://scenes/larry.tscn" id="3_ru4tf"]
+[ext_resource type="PackedScene" uid="uid://qfyuk213lid0" path="res://scenes/projectiles/projectileslarry/projectile2.tscn" id="3_u3awl"]
+[ext_resource type="PackedScene" uid="uid://d0jy66cnd21wo" path="res://scenes/projectiles/projectileslarry/projectile3.tscn" id="4_2ku1j"]
+[ext_resource type="PackedScene" uid="uid://d03uxoa6nydt5" path="res://scenes/projectiles/projectileslarry/projectile.tscn" id="5_f31uk"]
+[ext_resource type="PackedScene" uid="uid://giu34t0fkxwd" path="res://scenes/bosslarry.tscn" id="6_d3jkd"]
+[ext_resource type="PackedScene" uid="uid://b0xi5kpb3whhg" path="res://scenes/bullets/player_bullet.tscn" id="7_i8kv5"]
+
+[node name="Node2D" type="Node2D" unique_id=1958853367 node_paths=PackedStringArray("player", "score_label", "timer_label", "camera", "player_health_bar", "boss_health_bar")]
+script = ExtResource("1_d3jkd")
+player = NodePath("Player")
+score_label = NodePath("CanvasLayer/Label")
+timer_label = NodePath("CanvasLayer/Timer")
+camera = NodePath("ShakeCamera")
+player_health_bar = NodePath("CanvasLayer/ProgressBarPlayer")
+boss_health_bar = NodePath("CanvasLayer/ProgressBarBoss")
+intro_texture = ExtResource("2_d3jkd")
+boss_reward = 15
+projectile_scenes = Array[PackedScene]([ExtResource("3_u3awl"), ExtResource("4_2ku1j"), ExtResource("5_f31uk")])
+boss_scene = ExtResource("6_d3jkd")
+player_bullet_scene = ExtResource("7_i8kv5")
+
+[node name="Bglarry" type="Sprite2D" parent="." unique_id=1461470017]
+position = Vector2(578, 329)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_wwpf4")
+
+[node name="Player" parent="." unique_id=181559628 instance=ExtResource("3_ru4tf")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1074980548]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=246112560]
+offset_left = 215.0
+offset_top = 103.0
+offset_right = 270.0
+offset_bottom = 126.0
+text = "sadsad"
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Label" parent="CanvasLayer" unique_id=1328780787]
+offset_left = 38.0
+offset_top = 10.0
+offset_right = 78.0
+offset_bottom = 33.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBarPlayer" type="ProgressBar" parent="CanvasLayer" unique_id=586315624]
+offset_left = 243.0
+offset_top = 23.0
+offset_right = 344.0
+offset_bottom = 50.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBarBoss" type="ProgressBar" parent="CanvasLayer" unique_id=1150214421]
+offset_left = 171.0
+offset_top = 73.0
+offset_right = 294.0
+offset_bottom = 100.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=385256352]
+position = Vector2(577, 320)
+script = ExtResource("3_m7ahb")
+metadata/_custom_type_script = "uid://cguwy1im3yf6s"

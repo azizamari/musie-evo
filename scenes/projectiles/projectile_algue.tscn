@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dic5jo7fty4aw"]
 
 [ext_resource type="Script" uid="uid://djpg42u4evuxo" path="res://scripts/projectile.gd" id="1_yin8q"]
-[ext_resource type="Texture2D" uid="uid://bjhjl0vip0bs3" path="res://sprites/01-cliff.png" id="2_yin8q"]
+[ext_resource type="Texture2D" uid="uid://cco8swuvweu1k" path="res://sprites/algue.png" id="2_yin8q"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4pq2v"]
 animations = [{
@@ -15,7 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4pq2v"]
-radius = 26.0
+radius = 69.0
 
 [node name="Projectile" type="Area2D" unique_id=671729691]
 script = ExtResource("1_yin8q")
@@ -25,7 +25,8 @@ wobble_amplitude = 1.0
 is_hazard = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=207440251]
-scale = Vector2(0.1, 0.1)
+position = Vector2(1, -1.9073486e-06)
+scale = Vector2(0.08444445, 0.08444445)
 sprite_frames = SubResource("SpriteFrames_4pq2v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1581303177]

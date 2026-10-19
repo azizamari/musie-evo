@@ -5,6 +5,10 @@ extends CanvasLayer
 signal started
 
 @export var title := "HOW TO PLAY"
+@export var move_title := "Move"
+@export var move_text := "Swim up and down."
+# Arrow keys to draw: -1 = up, 1 = down
+@export var move_arrows: Array = [-1, 1]
 # Set by Main from game_duration
 @export var boss_time: float = 30.0
 # Set by Main, icons and values are read from these scenes
@@ -12,8 +16,21 @@ signal started
 # Also show the algue with a "Stun!" label
 @export var show_hazards := true
 @export var icon_size := 56.0
-# Keeps pixel art crisp in the icons
-@export var pixel_art := true
+# On = crisp pixel-art icons. Off = smooth, better for painted art
+@export var pixel_art := false
+
+@export_group("Image mode")
+# Full-screen artwork for the panel (e.g. 1920x1080 with transparent edges).
+# Empty = the panel is built in code instead
+@export var panel_texture: Texture2D
+# Centers of the +1, +2, +3 circles, in the image's own pixels
+@export var pickup_slots: Array[Vector2] = [Vector2(712, 685), Vector2(876, 688), Vector2(1041, 686)]
+# Where the algue goes (above "STUN!"), in the image's own pixels
+@export var hazard_slot := Vector2(1278, 686)
+# Icon size in the image's pixels (the circles are 130 wide)
+@export var slot_icon_size: float = 100.0
+# Gentle up and down float of the icons, in the image's pixels (0 = off)
+@export var icon_bob: float = 6.0
 
 @export_group("Colors")
 @export var panel_color := Color(0.04, 0.09, 0.16, 0.94)
@@ -26,6 +43,9 @@ signal started
 var _root: Control
 var _dim: ColorRect
 var _closing := false
+var _icons := [] # image mode: icons that float
+var _k := 1.0 # image mode: image pixels -> screen pixels
+var _t := 0.0
 
 
 func _ready() -> void:
@@ -43,13 +63,25 @@ func _ready() -> void:
 		_root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_root)
 
-	var center := CenterContainer.new()
-	center.set_anchors_preset(Control.PRESET_FULL_RECT)
-	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_root.add_child(center)
-	center.add_child(_build_panel())
+	if panel_texture:
+		_build_image_panel()
+	else:
+		var center := CenterContainer.new()
+		center.set_anchors_preset(Control.PRESET_FULL_RECT)
+		center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_root.add_child(center)
+		center.add_child(_build_panel())
 
 	_pop_in()
+
+
+func _process(delta: float) -> void:
+	if _icons.is_empty() or icon_bob <= 0.0:
+		return
+	_t += delta
+	for e in _icons:
+		var icon_rect: Control = e.node
+		icon_rect.position.y = e.y + sin(_t * 2.2 + e.phase) * icon_bob * _k
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -89,7 +121,68 @@ func _dismiss() -> void:
 		queue_free())
 
 
-# --- Layout ---
+# --- Image mode ---
+
+func _build_image_panel() -> void:
+	# Fit the artwork to the screen, keeping its shape
+	var vp := get_viewport().get_visible_rect().size
+	var img := panel_texture.get_size()
+	_k = minf(vp.x / img.x, vp.y / img.y)
+	var drawn := img * _k
+	var top_left := (vp - drawn) * 0.5
+
+	var art := TextureRect.new()
+	art.texture = panel_texture
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_SCALE
+	art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	art.position = top_left
+	art.size = drawn
+	_root.add_child(art)
+
+	# Drop the projectile sprites into the drawn circles
+	var found := _read_projectiles()
+	var pickups: Array = found.pickups
+	var hazards: Array = found.hazards
+	for i in mini(pickups.size(), pickup_slots.size()):
+		_place_icon(pickups[i].icon, top_left + pickup_slots[i] * _k, i)
+	if show_hazards and not hazards.is_empty():
+		_place_icon(hazards[0].icon, top_left + hazard_slot * _k, pickups.size())
+
+
+func _place_icon(icon: Dictionary, center: Vector2, index: int) -> void:
+	var icon_rect := TextureRect.new()
+	icon_rect.texture = icon.get("texture")
+	icon_rect.modulate = icon.get("color", Color.WHITE)
+	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon_rect.size = Vector2.ONE * slot_icon_size * _k
+	icon_rect.position = center - icon_rect.size * 0.5
+	_root.add_child(icon_rect)
+	_icons.append({"node": icon_rect, "y": icon_rect.position.y, "phase": index * 0.9})
+
+
+# Value, type and sprite of each projectile scene, pickups sorted 1, 2, 3
+func _read_projectiles() -> Dictionary:
+	var pickups := []
+	var hazards := []
+	for scene in projectile_scenes:
+		if scene == null:
+			continue
+		var temp = scene.instantiate()
+		var entry := {"value": temp.value, "icon": _icon_of(temp)}
+		if temp.is_hazard:
+			hazards.append(entry)
+		else:
+			pickups.append(entry)
+		temp.free()
+	pickups.sort_custom(func(a, b): return a.value < b.value)
+	return {"pickups": pickups, "hazards": hazards}
+
+
+# --- Layout (code-built panel) ---
 
 func _build_panel() -> PanelContainer:
 	var panel := PanelContainer.new()
@@ -114,9 +207,9 @@ func _build_panel() -> PanelContainer:
 	# 1. Movement
 	var move_keys := HBoxContainer.new()
 	move_keys.add_theme_constant_override("separation", 8)
-	move_keys.add_child(_key("", -1))
-	move_keys.add_child(_key("", 1))
-	col.add_child(_row(move_keys, "Move", "Swim up and down."))
+	for a in move_arrows:
+		move_keys.add_child(_key("", int(a)))
+	col.add_child(_row(move_keys, move_title, move_text))
 
 	# 2. Attack
 	col.add_child(_row(_key("SPACE", 0, 130.0), "Attack",
@@ -180,20 +273,9 @@ func _points_section() -> VBoxContainer:
 	items.add_theme_constant_override("separation", 28)
 	section.add_child(items)
 
-	# Read value, type and sprite from each projectile scene
-	var pickups := []
-	var hazards := []
-	for scene in projectile_scenes:
-		if scene == null:
-			continue
-		var temp = scene.instantiate()
-		var entry := {"value": temp.value, "icon": _icon_of(temp)}
-		if temp.is_hazard:
-			hazards.append(entry)
-		else:
-			pickups.append(entry)
-		temp.free()
-	pickups.sort_custom(func(a, b): return a.value < b.value)
+	var found := _read_projectiles()
+	var pickups: Array = found.pickups
+	var hazards: Array = found.hazards
 
 	for i in pickups.size():
 		var c: Color = tier_colors[mini(i, tier_colors.size() - 1)] if not tier_colors.is_empty() else text_color

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="musie-evo"
-run/main_scene="uid://0uaji0v7ticm"
+run/main_scene="uid://dmcqbr33la6wr"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]

@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://ddkjcc2trxvx8"]
+
+[ext_resource type="Script" uid="uid://3r2gkg8tsaxs" path="res://scenes/larry.gd" id="1_aifdt"]
+[ext_resource type="Texture2D" uid="uid://bnnc4s0e7flqd" path="res://sprites/larry1.png" id="2_aifdt"]
+[ext_resource type="Texture2D" uid="uid://dmjk7x07ifr0k" path="res://sprites/larry2.png" id="3_it5cg"]
+[ext_resource type="Texture2D" uid="uid://donn5qdy7xrxq" path="res://sprites/larry3.png" id="4_k6gt3"]
+[ext_resource type="Texture2D" uid="uid://cbto4ikdkl635" path="res://sprites/larry4.png" id="5_i6cau"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8syjs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_aifdt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_it5cg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_k6gt3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i6cau")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4pq2v"]
+size = Vector2(160, 91)
+
+[node name="Player" type="Area2D" unique_id=181559628]
+position = Vector2(128, 91)
+script = ExtResource("1_aifdt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1993775518]
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_8syjs")
+animation = &"idle"
+speed_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1678812842]
+position = Vector2(5, 2.5)
+shape = SubResource("RectangleShape2D_4pq2v")

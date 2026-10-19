@@ -40,7 +40,7 @@ signal died
 @export var recoil_punch: float = 0.08
 
 @export_group("Sprite")
-@export var base_rotation_deg: float = 180.0
+@export var base_rotation_deg: float = 0.0
 @export var max_tilt_deg: float = 30.0
 @export var tilt_smoothing: float = 8.0
 @export var bob_amplitude: float = 3.0

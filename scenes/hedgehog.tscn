@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://0qs7htgrtsp8"]
+
+[ext_resource type="Script" uid="uid://blk6y6w4ww0r0" path="res://scenes/hedgehog.gd" id="1_08fjg"]
+[ext_resource type="Texture2D" uid="uid://ccfaedhuhkqr6" path="res://sprites/hedgiejump1.png" id="2_mi23j"]
+[ext_resource type="Texture2D" uid="uid://cbbqcw3mgtyx1" path="res://sprites/hedgiejump2.png" id="3_gpidu"]
+[ext_resource type="Texture2D" uid="uid://c60sua5b0puhp" path="res://sprites/hedgie1.png" id="4_rjq8v"]
+[ext_resource type="Texture2D" uid="uid://cwag6hfpuhbjx" path="res://sprites/hedgie2.png" id="5_ti5rv"]
+[ext_resource type="Texture2D" uid="uid://cwipabgjqmeru" path="res://sprites/hedgie3.png" id="6_ppswi"]
+[ext_resource type="Texture2D" uid="uid://bnqy2ynbjfllt" path="res://sprites/hedgie4.png" id="7_5bwia"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_08fjg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mi23j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gpidu")
+}],
+"loop": 1,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": ExtResource("4_rjq8v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ti5rv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ppswi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5bwia")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mi23j"]
+radius = 282.0
+height = 1004.0
+
+[node name="Hedgehog" type="Area2D" unique_id=996317951]
+script = ExtResource("1_08fjg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=865363364]
+sprite_frames = SubResource("SpriteFrames_08fjg")
+animation = &"run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2139662853]
+position = Vector2(-28, -103)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_mi23j")

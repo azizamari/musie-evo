@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dfccwj0tf0xsp"]
+
+[ext_resource type="Script" uid="uid://cq2s6ggaji0hc" path="res://scenes/sound_ring.gd" id="1_qsy48"]
+[ext_resource type="Texture2D" uid="uid://d2qi4s7e5qfq1" path="res://sprites/ring.png" id="2_jia62"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4pq2v"]
+radius = 41.0
+height = 212.0
+
+[node name="SoundRing" type="Area2D" unique_id=1391163388]
+script = ExtResource("1_qsy48")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=674459058]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_jia62")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=880107246]
+shape = SubResource("CapsuleShape2D_4pq2v")

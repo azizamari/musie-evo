@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://d03uxoa6nydt5"]
+
+[ext_resource type="Script" uid="uid://djpg42u4evuxo" path="res://scripts/projectile.gd" id="1_stfq6"]
+[ext_resource type="Texture2D" uid="uid://j1dbr0orl3ll" path="res://sprites/projlarry1.png" id="2_stfq6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4pq2v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_stfq6")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4pq2v"]
+radius = 26.0
+
+[node name="Projectile" type="Area2D" unique_id=671729691]
+script = ExtResource("1_stfq6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=207440251]
+scale = Vector2(0.06, 0.06)
+sprite_frames = SubResource("SpriteFrames_4pq2v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1581303177]
+shape = SubResource("CircleShape2D_4pq2v")

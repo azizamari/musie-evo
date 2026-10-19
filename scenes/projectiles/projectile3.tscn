@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://chot4vgt4nlcs"]
 
 [ext_resource type="Script" uid="uid://djpg42u4evuxo" path="res://scripts/projectile.gd" id="1_lhfci"]
-[ext_resource type="Texture2D" uid="uid://dnkvnkwr0ied" path="res://sprites/projectile.png" id="2_pniui"]
+[ext_resource type="Texture2D" uid="uid://b2x5ti6de5eex" path="res://sprites/noteseal3.png" id="2_lhfci"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4pq2v"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_pniui")
+"texture": ExtResource("2_lhfci")
 }],
 "loop": 1,
 "name": &"default",
@@ -26,7 +26,7 @@ wobble_amplitude = 60.0
 wobble_frequency = 1.4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=207440251]
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.06, 0.06)
 sprite_frames = SubResource("SpriteFrames_4pq2v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1581303177]

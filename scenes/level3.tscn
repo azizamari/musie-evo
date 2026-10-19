@@ -1,6 +1,68 @@
 [gd_scene format=3 uid="uid://bvw8b6pvhv03f"]
 
-[ext_resource type="Script" uid="uid://d1lflf5q16x4f" path="res://scripts/level_3.gd" id="1_f0ip2"]
+[ext_resource type="Script" uid="uid://cldevbqhdh41g" path="res://scenes/level_3.gd" id="1_qyetb"]
+[ext_resource type="PackedScene" uid="uid://0qs7htgrtsp8" path="res://scenes/hedgehog.tscn" id="1_yesqi"]
+[ext_resource type="PackedScene" uid="uid://c8qc284jhv4qb" path="res://scenes/projectiles/projectileshedgie/projectile2.tscn" id="2_b72m1"]
+[ext_resource type="Texture2D" uid="uid://b4c36a8e0nqst" path="res://sprites/tutorial.png" id="2_fh4ka"]
+[ext_resource type="Script" uid="uid://cguwy1im3yf6s" path="res://scenes/camera_2d.gd" id="2_qyetb"]
+[ext_resource type="PackedScene" uid="uid://b2dyyoxwa05tp" path="res://scenes/projectiles/projectileshedgie/projectile3.tscn" id="3_5mhml"]
+[ext_resource type="PackedScene" uid="uid://crvmut7b3y38r" path="res://scenes/projectiles/projectileshedgie/projectile.tscn" id="4_rupth"]
+[ext_resource type="PackedScene" uid="uid://c4aashrsixycv" path="res://scenes/projectiles/projectileshedgie/projectile_algue.tscn" id="5_6qt4k"]
+[ext_resource type="PackedScene" uid="uid://c7xlo5ahx2d6g" path="res://scenes/hedgie_boss.tscn" id="6_6qt4k"]
+[ext_resource type="PackedScene" uid="uid://b0xi5kpb3whhg" path="res://scenes/bullets/player_bullet.tscn" id="7_6qt4k"]
+[ext_resource type="Texture2D" uid="uid://3ng010g5drcr" path="res://sprites/bglevel3.png" id="8_6qt4k"]
 
-[node name="Node2D" type="Node2D" unique_id=1958853367]
-script = ExtResource("1_f0ip2")
+[node name="level3" type="Node2D" unique_id=1958853367 node_paths=PackedStringArray("player", "score_label", "timer_label", "camera", "player_health_bar", "boss_health_bar")]
+script = ExtResource("1_qyetb")
+player = NodePath("Hedgehog")
+score_label = NodePath("CanvasLayer/ScoreLabel")
+timer_label = NodePath("CanvasLayer/TimerLabel")
+camera = NodePath("ShakeCamera")
+player_health_bar = NodePath("CanvasLayer/PlayerHealthBar")
+boss_health_bar = NodePath("CanvasLayer/BossHealthBar")
+intro_texture = ExtResource("2_fh4ka")
+projectile_scenes = Array[PackedScene]([ExtResource("2_b72m1"), ExtResource("3_5mhml"), ExtResource("4_rupth"), ExtResource("5_6qt4k")])
+base_speed = 500.0
+boss_scene = ExtResource("6_6qt4k")
+player_bullet_scene = ExtResource("7_6qt4k")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=81989744]
+position = Vector2(577.1111, 324.25)
+scale = Vector2(0.60694444, 0.60694444)
+texture = ExtResource("8_6qt4k")
+
+[node name="Hedgehog" parent="." unique_id=996317951 instance=ExtResource("1_yesqi")]
+position = Vector2(147.99998, 512.9999)
+scale = Vector2(0.2, 0.2)
+jump_height = 250.0
+double_jump_height = 170.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1264830745]
+offset_left = -1.0
+offset_top = 559.0
+offset_right = 1293.0
+offset_bottom = 647.0
+color = Color(1, 0.5137255, 1, 0)
+
+[node name="ShakeCamera" type="Camera2D" parent="." unique_id=1268386445]
+position = Vector2(575, 320)
+script = ExtResource("2_qyetb")
+metadata/_custom_type_script = "uid://cguwy1im3yf6s"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1449228896]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer" unique_id=176893706]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer" unique_id=1639665628]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="CanvasLayer" unique_id=98329624]
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="BossHealthBar" type="ProgressBar" parent="CanvasLayer" unique_id=885437956]
+offset_right = 4.0
+offset_bottom = 27.0

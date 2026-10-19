@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://giu34t0fkxwd"]
+
+[ext_resource type="Script" uid="uid://0h5flursv71a" path="res://scenes/boss.gd" id="1_1upie"]
+[ext_resource type="PackedScene" uid="uid://begxu8shcv8j8" path="res://scenes/bullets/boss_bullet.tscn" id="2_c8iwo"]
+[ext_resource type="Texture2D" uid="uid://csayy6od25s85" path="res://sprites/owlattack.png" id="3_2uv4n"]
+[ext_resource type="Texture2D" uid="uid://br2whkplblksp" path="res://sprites/owl1.png" id="4_qqtth"]
+[ext_resource type="Texture2D" uid="uid://c825o14ne1wna" path="res://sprites/owl2.png" id="5_lhsy8"]
+[ext_resource type="Texture2D" uid="uid://desbijcy7noc1" path="res://sprites/owl3.png" id="6_oqcoa"]
+[ext_resource type="Texture2D" uid="uid://can220ws7ey0a" path="res://sprites/owl4.png" id="7_y1351"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_neq0i"]
+radius = 178.13759
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xd8r6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2uv4n")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_qqtth")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lhsy8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_oqcoa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_y1351")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Boss" type="Area2D" unique_id=2066973918]
+script = ExtResource("1_1upie")
+bullet_scene = ExtResource("2_c8iwo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2072070569]
+shape = SubResource("CircleShape2D_neq0i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=569810226]
+position = Vector2(1.999939, -1.0000305)
+scale = Vector2(0.39001447, 0.39001447)
+sprite_frames = SubResource("SpriteFrames_xd8r6")
+animation = &"attack"

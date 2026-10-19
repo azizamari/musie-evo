@@ -22,10 +22,18 @@ signal died
 @export var bullet_speed: float = 350.0
 # Where bullets spawn relative to the boss (its left side)
 @export var muzzle_offset := Vector2(-60.0, 0.0)
-# Health ratio where the boss gets angry: faster fire and 3-way spread
+# Health ratio where the boss gets angry: fires faster (always one bullet at a time)
 @export var rage_threshold: float = 0.5
 @export var rage_fire_interval: float = 0.75
-@export var spread_deg: float = 14.0
+
+@export_group("Animation")
+# Animation names in the boss's SpriteFrames, missing ones are skipped
+@export var idle_anim := "idle"
+@export var attack_anim := "attack"
+# Seconds the attack pose shows BEFORE the bullet comes out (warns the player)
+@export var windup_time: float = 0.3
+# Seconds the attack pose stays AFTER the shot before going back to idle
+@export var attack_hold: float = 0.25
 
 var health := 0
 var target: Node2D # set by Main so the boss can aim at the player
@@ -34,6 +42,8 @@ var _dead := false
 var _raging := false
 var _t := 0.0
 var _fire_cd := 0.0
+var _winding := false
+var _attack_left := 0.0
 var _home_y := 0.0
 var _base_scale := Vector2.ONE
 var _rest_color := Color.WHITE
@@ -51,7 +61,11 @@ func _ready() -> void:
 	if visual:
 		_base_scale = visual.scale
 		if visual is AnimatedSprite2D:
-			(visual as AnimatedSprite2D).play()
+			var a := visual as AnimatedSprite2D
+			if a.sprite_frames and a.sprite_frames.has_animation(idle_anim):
+				a.play(idle_anim)
+			else:
+				a.play()
 	area_entered.connect(_on_area_entered)
 	health_changed.emit(health, max_health)
 
@@ -74,6 +88,14 @@ func _begin() -> void:
 
 func stop() -> void:
 	_active = false
+	_winding = false
+	_play(idle_anim)
+
+
+func _play(anim: String) -> void:
+	var a := visual as AnimatedSprite2D
+	if a and a.sprite_frames and a.sprite_frames.has_animation(anim):
+		a.play(anim)
 
 
 func _process(delta: float) -> void:
@@ -84,9 +106,24 @@ func _process(delta: float) -> void:
 	position.y = _home_y + sin(_t * TAU * patrol_speed) * patrol_amplitude
 
 	_fire_cd -= delta
+
+	# Telegraph: switch to the attack pose a moment before the shot
+	if not _winding and _fire_cd <= windup_time:
+		_winding = true
+		_play(attack_anim)
+		_punch(-0.08) # small lean back before yelling
+
 	if _fire_cd <= 0.0:
 		_fire()
+		_winding = false
+		_attack_left = attack_hold
 		_fire_cd = rage_fire_interval if _raging else fire_interval
+
+	# Back to idle after the shot, unless the next wind-up already started
+	if _attack_left > 0.0:
+		_attack_left -= delta
+		if _attack_left <= 0.0 and not _winding:
+			_play(idle_anim)
 
 
 func _fire() -> void:
@@ -98,18 +135,13 @@ func _fire() -> void:
 	if is_instance_valid(target):
 		dir = (target.position - origin).normalized()
 
-	var angles := [0.0]
-	if _raging:
-		angles = [-spread_deg, 0.0, spread_deg]
+	var b = bullet_scene.instantiate()
+	b.position = origin
+	b.direction = dir
+	b.speed = bullet_speed
+	get_parent().add_child(b)
 
-	for a in angles:
-		var b = bullet_scene.instantiate()
-		b.position = origin
-		b.direction = dir.rotated(deg_to_rad(a))
-		b.speed = bullet_speed
-		get_parent().add_child(b)
-
-	_punch(0.1)
+	_punch(0.12)
 
 
 func _on_area_entered(area: Area2D) -> void:
